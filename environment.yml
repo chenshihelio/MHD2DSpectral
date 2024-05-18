@@ -1,0 +1,8 @@
+name: laps
+channels:
+  - conda-forge
+dependencies:
+  - python<3.12
+  - gfortran
+  - openmpi
+  - fftw=*=mpi_openmpi*
