@@ -1,5 +1,5 @@
 &genr
-   tmax = 1.0
+   tmax = 10.0
    dtout = 0.1
    dtrms = 0.05
 /

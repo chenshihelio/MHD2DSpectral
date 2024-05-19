@@ -1,11 +1,8 @@
 FORTRAN=mpif90 # Define the compiler
-
-# specify the path of FFTW
-fftwpath=/usr/local
-OPTIONS = -O3 -fdefault-real-8 -I$(fftwpath)/include -L$(fftwpath)/lib -lfftw3
+OPTIONS = -O3 -fdefault-real-8 -lfftw3
 
 # source files
-EXE = mhd.exe 
+EXE = lasp
 MAIN = mhd.f90 
 SRC4 = mhdrhs.f90 restart.f90
 SRC3 = fftw.f90 mhdoutput.f90 rktmod.f90 dealiasing.f90 mhdrms.f90 AEBmod.f90
@@ -33,7 +30,10 @@ $(OBJ2): $(OBJ1) $(SRC2)
 $(OBJ1): $(SRC1) 
 	$(FORTRAN) -c $(SRC1) $(OPTIONS)
 
-# Cleaning
+install: $(EXE)
+	install -m 755 $(EXE) $(CONDA_PREFIX)/bin/
+	rm $(EXE)
+
 clean:
 	rm *.o *.mod
 

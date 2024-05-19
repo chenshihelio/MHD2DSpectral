@@ -1,5 +1,61 @@
 This is the 2D pseudo-spectral MHD code for the course UCLA M263A - Solar System Magnetohydrodynamics by Prof. Vassilis Angelopoulos.
 
+## Setup
+
+### Dependencies
+
+Using the Conda Package Manager, you can install the required packages by running the following command:
+
+```sh
+conda env create --file environment.yml
+```
+
+or with micromamba:
+
+```sh
+micromamba env create --file environment.yml
+```
+
+To activate the environment, run:
+
+```sh
+conda activate laps
+```
+
+### Installation
+
+To install the package, run the following command:
+
+```sh
+cd src && make install && make clean
+```
+
+## Run
+
+In order to run a new simulation:
+
+1. create a new directory, where the simulation will be run
+
+2. make sure the `lasp` executable is either copied into this directory or in your PATH environment variable
+
+3. add an inputs file `mhd.input`
+
+4. run
+
+Run the executable, e.g. with MPI:
+
+```sh
+mpirun -np 4 laps
+```
+
+or using the `run` command in `justfile`:
+
+```sh
+just run
+```
+
+This will also create a new directory `diags` where the output files will be stored.
+
 <hr>
 
 Copyright 2024 Chen Shi
