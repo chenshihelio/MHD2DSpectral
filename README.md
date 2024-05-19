@@ -48,6 +48,14 @@ Run the executable, e.g. with MPI:
 mpirun -np 4 laps
 ```
 
+or using the `run` command in `justfile`:
+
+```sh
+just run
+```
+
+This will also create a new directory `diags` where the output files will be stored.
+
 <hr>
 
 Copyright 2024 Chen Shi

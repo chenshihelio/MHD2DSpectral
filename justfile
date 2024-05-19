@@ -1,3 +1,6 @@
+# set the default number of processors (this number should be 2^n)
+np := "4"
+
 default: 
     just --list
 
@@ -7,11 +10,13 @@ env:
 install:
     cd src && make install && make clean
 
-run:
-    mpirun -np 4 lasp
-    mkdir -p {{invocation_directory()}}/diags
-    mv *.dat {{invocation_directory()}}/diags/
+[no-cd]
+run np=np:
+    mpirun -np {{np}} lasp
+    mkdir -p diags
+    mv *.dat diags/
 
+[no-cd]
 clean:
     find . -name 'log' -type f -delete
     find . -name '*.o' -type f -delete
