@@ -15,7 +15,7 @@ program mhd
     integer :: ix,iy,iz, ivar, ixmin,ixmax,iymin,iymax,izmin,izmax
     real :: dt, tmax, dtout, dtrms, dtlog
     real :: tout, toutrms, tlog
-    integer :: iout = 0 
+    integer :: iout = 0
     integer(kind=8) :: istep = 0
     real :: cfl = 0.5
     real :: max_divB = 0.0
@@ -35,8 +35,9 @@ program mhd
     namelist/field/ifield,B0,a0,current_sheet_width,shear_width,press0,U_fast,U_slow,&
         n_fast,n_slow,Bx0,By0,Bz0,jet_width,Vjet,theta
     namelist/pert/ipert,delta_b,db0,nmode,in_out_ratio,initial_spectral_slope,&
-        delta_rho,delta_p,iMode, mode_start, mode_end
-    namelist/AEB/if_AEB,radius0,Ur0,if_corotating,corotating_angle
+        delta_rho,delta_p,iMode, mode_start, mode_end,&
+        if_external_force
+    namelist/AEB/if_AEB,radius0,Ur0,if_corotating,corotating_angle,if_z_radial
     namelist/Hall/if_hall, ion_inertial_length
      ! Get the clock count at the beginning
     call system_clock(clock_count_start, clock_count_rate, clock_count_max )
@@ -51,6 +52,18 @@ program mhd
         read(4, AEB)
         read(4, Hall)
     close(unit=4)
+
+    ! check incompatible parameters
+    if (if_AEB) then 
+        if (if_z_radial .and. if_corotating) then 
+            if (ipe == 0) then 
+                write(*,*) 'You CANNOT set both if_z_radial and if_corotating!!!'
+            endif
+            call mpi_finalize(ierr)
+            ! call exit(ierr) 
+        endif
+    endif
+
 
     !initialization modules -----------------------
     call parallel_start(nx,ny,nvar)
@@ -341,6 +354,9 @@ program mhd
                         endif
 
                         dtx = dx / cmaxx 
+                        if (if_AEB .and. if_z_radial) then 
+                            dtx = dtx * (radius / radius0)
+                        endif 
                         dty = dy / cmaxy * (radius / radius0)
 
                         dtmin_iter = min(dtx,dty)
@@ -436,6 +452,11 @@ program mhd
                 if (if_AEB) then 
                     write(*,'(1x,a,1pe10.2,a,1pe10.2)') 'Expanding Box: ON. Ur0 = ',Ur0, &
                         ', R0 = ',radius0
+                    if (if_z_radial) then 
+                        write(*,'(4x,a)') 'Z-axis is the radial direction'
+                    else 
+                        write(*,'(4x,a)') 'X-axis is the radial direction'
+                    endif
                 else 
                     write(*,'(1x,a)') 'Expanding Box: OFF.'
                 endif
@@ -492,6 +513,9 @@ program mhd
                     ky = cmplx(0,wave_number_y(iy)) * radius0/radius
                     do ix=ixmin,ixmax
                         kx = cmplx(0,wave_number_x(ix))
+                        if (if_AEB .and. if_z_radial) then 
+                            kx = kx * radius0/radius
+                        endif
 
                         if (if_AEB .and. if_corotating) then
                             kx = cmplx(0,wave_number_x(ix)) * cos_cor_ang + &
