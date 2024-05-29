@@ -324,6 +324,17 @@ module mhdinit
                     enddo
                 enddo
 
+            case(6)
+                !2D gaussian perturbation in Bz
+                do iz = izmin,izmax
+                    do iy = iymin,iymax
+                        do ix = ixmin,ixmax 
+                            uu(ix,iy,iz,7) = uu(ix,iy,iz,7) + db0 * (xgrid(ix) - 0.5*Lx) * &
+                            exp( -( (xgrid(ix)-0.5*Lx)/(0.01*Lx) )**2 - ((ygrid(iy)-0.5*Ly)/(0.01*Ly))**2)
+                        enddo
+                    enddo
+                enddo
+
 
             case default
                 continue 

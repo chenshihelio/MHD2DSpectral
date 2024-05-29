@@ -1,5 +1,5 @@
 &genr
-   tmax = 10.0
+   tmax = 3.0
    dtout = 0.1
    dtrms = 0.05
 /
@@ -10,18 +10,18 @@
 /
 &grid
    nx = 256
-   ny = 8
-   Lx = 8.0
-   Ly = 16.0
+   ny = 256
+   Lx = 4.0
+   Ly = 4.0
 /
 &field
    ifield = 0
    Bx0 = 1.
    press0 = 0.2
 /
-&pert
-   ipert = 1
-   db0 = 0.5
+&pert   
+   ipert = 6
+   db0 = 0.1
 /
 &phys
    adiabatic_index = 1.666667

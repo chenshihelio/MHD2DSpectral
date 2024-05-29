@@ -10,16 +10,22 @@ Using the Conda Package Manager, you can install the required packages by runnin
 conda env create --file environment.yml
 ```
 
-or with micromamba:
+or with pixi:
 
 ```sh
-micromamba env create --file environment.yml
+pixi install
 ```
 
 To activate the environment, run:
 
 ```sh
 conda activate laps
+```
+
+or with pixi:
+
+```sh
+eval "$(pixi shell-hook -e dev)"
 ```
 
 ### Installation
@@ -29,6 +35,8 @@ To install the package, run the following command:
 ```sh
 cd src && make install && make clean
 ```
+
+Note that `pylasp` (Python interface to LAPS) is also installed as a package when using `pixi install`.
 
 ## Run
 

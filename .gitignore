@@ -1,3 +1,17 @@
+.DS_Store
+.vscode/
 *.dat
 *.exe
 *log*
+figures/
+
+# pixi environments
+.pixi
+*.egg-info
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Distribution / packaging
+build/
+dist/

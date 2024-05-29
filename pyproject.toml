@@ -1,0 +1,34 @@
+[project]
+name = "pylaps"
+version = "0.1.0"
+description = "Python interface to LAPS"
+authors = [{name = "Beforerr", email = "zzj956959688@gmail.com"}]
+requires-python = ">= 3.10"
+dependencies = ["numpy"]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["osx-arm64"]
+
+[tool.pixi.pypi-dependencies]
+pylaps = { path = ".", editable = true }
+
+[tool.pixi.tasks]
+
+[tool.pixi.dependencies]
+gfortran = "*"
+openmpi = "*"
+fftw = { version = "*", build = "mpi_openmpi*" }
+
+[tool.pixi.feature.dev.dependencies]
+ipykernel = "*"
+matplotlib = "*"
+tqdm = "*"
+
+[tool.pixi.environments]
+# implicit: default = ["default"]
+dev = ["dev"] # implicit: dev = ["dev", "default"]
