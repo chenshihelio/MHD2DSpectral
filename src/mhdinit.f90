@@ -224,6 +224,22 @@ module mhdinit
                 
                 uu(:,:,:,8) = press0 
                 
+            Case(2)
+                !Add a double current sheet B0 = B0x(y)
+                !Use temperature to balance the total pressure
+                ylow = 0.25 * Ly 
+                yup = 0.75 * Ly
+                ycent = 0.5 * Ly 
+
+                do iy = iymin,iymax 
+                    if (ygrid(iy) < ycent ) then 
+                        uu(:,iy,:,5) = B0 * tanh( (ygrid(iy) - ylow)/a0 ) 
+                    else 
+                        uu(:,iy,:,5) = - B0 * tanh( (ygrid(iy) - yup )/a0 )
+                    endif
+                    uu(:,iy,:,8) = press0 - 0.5 * (uu(:,iy,:,5))**2
+                    uu(:,iy,:,1) = rho0
+                enddo
             case default
                 continue
             end select
@@ -335,7 +351,70 @@ module mhdinit
                     enddo
                 enddo
 
+            case(7)
+                !for tearing instability
+                n_m = nmode
 
+                ylow = 0.25 * Ly
+                yup = 0.75 * Ly
+
+                allocate(phs(nmode))
+
+                ! lower interface
+                ir = 1
+                do ix=1,12
+                    ir_arr(ix) = ir + 100
+                enddo
+                call random_seed(PUT=ir_arr)
+                call random_number(phs)
+
+
+                Do ikx=1, n_m
+                    kk = ikx*2*pi/Lx
+                    pph = (phs(ikx) - 0.5) * 2.0 * pi 
+
+                    do iz = izmin, izmax
+                        do iy = iymin,iymax
+                            do ix = ixmin,ixmax
+                                uu(ix,iy,iz,5) = uu(ix,iy,iz,5) + delta_b * &
+                                    cos(kk*xgrid(ix)+pph) * 0.5 * exp(-( (ygrid(iy) &
+                                    -ylow) / a0 )**2) * (-2 * (ygrid(iy)-ylow)/a0**2)
+                                uu(ix,iy,iz,6) = uu(ix,iy,iz,6) + delta_b * &
+                                    kk * sin(kk*xgrid(ix)+pph) * 0.5 * exp(-( &
+                                    (ygrid(iy)-ylow) / a0 )**2)
+                            enddo
+                        enddo 
+                    enddo
+                End Do
+
+
+                ! upper interface
+                ir = 7
+                do ix=1,12
+                    ir_arr(ix) = ir + 100
+                enddo
+                call random_seed(PUT=ir_arr)
+                call random_number(phs)
+
+                Do ikx=1, n_m
+                    pph = (phs(ikx) - 0.5) * 2.0 * pi
+                    kk = ikx*2*pi/Lx
+
+                    do iz = izmin, izmax
+                        do iy = iymin,iymax
+                            do ix = ixmin,ixmax
+                                uu(ix,iy,iz,5) = uu(ix,iy,iz,5) + delta_b * &
+                                    cos(kk*xgrid(ix)+pph) * 0.5 * exp(-( (ygrid(iy) &
+                                    -yup) / a0 )**2) * (-2 * (ygrid(iy)-yup)/a0**2)
+
+                                uu(ix,iy,iz,6) = uu(ix,iy,iz,6) + delta_b * &
+                                    kk * sin(kk*xgrid(ix)+pph) * 0.5 * exp(-( &
+                                    (ygrid(iy)-yup) / a0 )**2)
+                            enddo
+                        enddo 
+                    enddo
+
+                End Do
             case default
                 continue 
             end select
