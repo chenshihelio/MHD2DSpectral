@@ -74,4 +74,8 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-If you use the code to generate any publications, you should cite the following articles @article{shi2020propagation, title={Propagation of Alfv{'e}n waves in the expanding solar wind with the fast--slow stream interaction}, author={Shi, Chen and Velli, Marco and Tenerani, Anna and Rappazzo, Franco and R{'e}ville, Victor}, journal={The Astrophysical Journal}, volume={888}, number={2}, pages={68}, year={2020}, publisher={IOP Publishing} }
+If you use the code to generate any publications, you should cite the following articles 
+
+@article{shi11laps, title={LAPS: An MPI-parallelized 3D pseudo-spectral Hall-MHD simulation code incorporating the expanding box model}, author={Shi, Chen and Tenerani, Anna and Rappazzo, Antonio Franco and Velli, Marco}, journal={Frontiers in Astronomy and Space Sciences}, volume={11}, pages={1412905}, publisher={Frontiers} }
+
+@article{shi2020propagation, title={Propagation of Alfv{'e}n waves in the expanding solar wind with the fast--slow stream interaction}, author={Shi, Chen and Velli, Marco and Tenerani, Anna and Rappazzo, Franco and R{'e}ville, Victor}, journal={The Astrophysical Journal}, volume={888}, number={2}, pages={68}, year={2020}, publisher={IOP Publishing} }
