@@ -2,7 +2,7 @@ FORTRAN=mpif90 # Define the compiler
 OPTIONS = -O3 -fdefault-real-8 -lfftw3
 
 # source files
-EXE = lasp
+EXE = laps
 MAIN = mhd.f90 
 SRC4 = mhdrhs.f90 restart.f90
 SRC3 = fftw.f90 mhdoutput.f90 rktmod.f90 dealiasing.f90 mhdrms.f90 AEBmod.f90
@@ -36,11 +36,5 @@ install: $(EXE)
 
 clean:
 	rm *.o *.mod
-
-
-
-
-
-
 
 
