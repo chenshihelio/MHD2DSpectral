@@ -52,9 +52,9 @@ for nt in range(nout):
     
 
     # plot 2D color-coded maps
-    figsize=[12,8]
+    figsize=[15,5]
     fig = plt.figure(figsize=figsize)
-    gs = GridSpec(2,2)
+    gs = GridSpec(2,3)
 
     sub = fig.add_subplot(gs[0,0])
     pm = sub.pcolormesh(XX,YY,rho,shading='gouraud',cmap=plt.cm.plasma)
@@ -79,6 +79,22 @@ for nt in range(nout):
     sub.set_title(r'$U_x$'+' $t={:.2f}$'.format(t))
 
     sub = fig.add_subplot(gs[1,1])
+    pm = sub.pcolormesh(XX,YY,uy,shading='gouraud',cmap=plt.cm.RdBu_r,
+        vmin=-np.max(np.abs(uy)),vmax=np.max(np.abs(uy)))
+    cb = fig.colorbar(pm,shrink=0.9,aspect=15)
+    sub.set_xlabel(r'$x$',fontsize=12)
+    sub.set_ylabel(r'$y$',fontsize=12)
+    sub.set_title(r'$U_y$'+' $t={:.2f}$'.format(t))
+
+    sub = fig.add_subplot(gs[0,2])
+    pm = sub.pcolormesh(XX,YY,Bx,shading='gouraud',cmap=plt.cm.RdBu_r,
+        vmin=-np.max(np.abs(Bx)),vmax=np.max(np.abs(Bx)))
+    cb = fig.colorbar(pm,shrink=0.9,aspect=15)
+    sub.set_xlabel(r'$x$',fontsize=12)
+    sub.set_ylabel(r'$y$',fontsize=12)
+    sub.set_title(r'$B_x$'+' $t={:.2f}$'.format(t))
+
+    sub = fig.add_subplot(gs[1,2])
     pm = sub.pcolormesh(XX,YY,By,shading='gouraud',cmap=plt.cm.RdBu_r,
         vmin=-np.max(np.abs(By)),vmax=np.max(np.abs(By)))
     cb = fig.colorbar(pm,shrink=0.9,aspect=15)
