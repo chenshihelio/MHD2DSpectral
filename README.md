@@ -4,7 +4,9 @@ This is the 2D pseudo-spectral MHD code for the course UCLA M263A - Solar System
 
 ### Dependencies
 
-Using the Conda Package Manager, you can install the required packages by running the following command:
+First, install the Conda Package Manager. Miniconda is enough: (https://www.anaconda.com/docs/getting-started/miniconda/install).
+
+You can install the required packages by running the following command:
 
 ```sh
 conda env create --file environment.yml
