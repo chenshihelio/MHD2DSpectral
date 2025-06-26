@@ -1,4 +1,4 @@
-This is the 2D pseudo-spectral MHD code for the course UCLA M263A - Solar System Magnetohydrodynamics by Prof. Vassilis Angelopoulos.
+This is the 2D pseudo-spectral MHD code for the course UCLA M263A - Solar System Magnetohydrodynamics by Prof. Vassilis Angelopoulos. It is a light 2D version of the UC**LA**-**P**seudo-**S**pectral (LAPS) code, which can be found at https://github.com/chenshihelio/LAPS.
 
 ## Setup
 
